@@ -26,9 +26,7 @@ const props = defineProps({
     <div class="id">
       AI
     </div>
-    <div class="card">
-      {{ item.text }}
-    </div>
+    <div class="card" v-html="item.text" />
   </div>
 </template>
 
@@ -63,6 +61,7 @@ const props = defineProps({
     border-radius: 10px;
     padding: 10px;
     background: #fff;
+    white-space: pre-line;
   }
 }
 </style>

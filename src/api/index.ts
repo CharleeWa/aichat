@@ -5,12 +5,8 @@ export async function generate(msg): Promise<any> {
     model: 'text-davinci-003',
     prompt: msg,
     temperature: 0.7,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-    max_tokens: 500,
+    max_tokens: 2000,
     stream: false,
-    n: 1,
   }
   return request.post('/aif/aichat', playload)
 }
