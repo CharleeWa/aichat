@@ -18,8 +18,21 @@ const generateDesc = async (messae: any) => {
   finisText.value = '此时一位工作人员正在疯狂码字...'
   const res = await generate(messae)
   finisText.value = '没有更多消息'
+  let resu = ''
+  const arr = ['？', '，', '；', '！', '?', ',', ';', '!', '。', '.']
+  if (arr.includes(res.data.choices[0].text.charAt(0)))
+    resu = res.data.choices[0].text.substr(1)
+  else
+    resu = res.data.choices[0].text
+
+  if (resu.substring(0, 4) === '\n\n')
+    resu = resu.replace('\n\n', '')
+
+  if (resu.indexOf('↵↵') !== 0)
+    resu = resu.replace('↵↵', '')
+
   list.value.push({
-    text: res.data.choices[0].text,
+    text: resu.trim(),
     label: 'ai',
   })
   // const configuration = new Configuration({
