@@ -4,7 +4,7 @@ export async function generate(msg): Promise<any> {
   const playload = {
     model: 'text-davinci-003',
     prompt: msg,
-    temperature: 0.7,
+    temperature: 0.3,
     max_tokens: 2000,
     stream: false,
   }

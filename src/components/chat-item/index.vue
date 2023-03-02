@@ -30,7 +30,7 @@ const props = defineProps({
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .chat-card {
   min-height: 30px;
   display: flex;
@@ -62,6 +62,12 @@ const props = defineProps({
     padding: 10px;
     background: #fff;
     white-space: pre-line;
+
+    .token {
+      font-size: 12px;
+      color: #b3aeae;
+      margin-top: 10px;
+    }
   }
 }
 </style>
