@@ -8,5 +8,5 @@ export async function generate(msg): Promise<any> {
     max_tokens: 2000,
     stream: false,
   }
-  return request.post('/aif/aichat', playload)
+  return request.post('/aiapi/trans/v1/completions', playload)
 }
