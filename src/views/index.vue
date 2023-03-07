@@ -8,7 +8,7 @@ const messae = ref('')
 const context = ref([
   {
     role: 'system',
-    content: '你是很有帮助的客服。',
+    content: '你是一个很有用的客服。',
   },
 ])
 // const price = ref(0)
@@ -32,11 +32,11 @@ const generateDesc = async (content: any) => {
 
   context.value.push({
     role: 'assistant',
-    content: res,
+    content: res.data.choices[0].message.content,
   })
 
   list.value.push({
-    text: res,
+    text: res.data.choices[0].message.content,
     label: 'ai',
   })
 }

@@ -1,9 +1,8 @@
 {
-  "name": "vue3-vant-mobile",
+  "name": "aichat",
   "version": "1.2.0",
   "packageManager": "pnpm@7.14.0",
-  "description": "template for Vue3 Vant Mobile",
-  "license": "MIT",
+  "description": "AIChat IM",
   "scripts": {
     "dev": "cross-env MOCK_SERVER_PORT=8086 vite",
     "build": "vue-tsc --noEmit && vite build",
