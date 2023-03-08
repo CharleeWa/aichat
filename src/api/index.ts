@@ -6,3 +6,10 @@ export async function generate(msg): Promise<any> {
   }
   return request.post('/aiapi/trans/v1/chat/completions', playload)
 }
+
+export async function generateEmbeddings(msg): Promise<any> {
+  const playload = {
+    questions: msg,
+  }
+  return request.post('/aiapi/trans/v1/embeddings/completions', playload)
+}

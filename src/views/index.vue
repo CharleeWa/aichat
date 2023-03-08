@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { generate } from '../api/index'
+import { showToast } from 'vant'
+import { generate, generateEmbeddings } from '../api/index'
 
 const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const messae = ref('')
+const showPopover = ref(false)
+const model = ref('ChatGPT')
+
 const context = ref([
   {
     role: 'system',
     content: '你是一个很有用的客服。',
   },
 ])
+
 // const price = ref(0)
 const finisText = ref('没有更多消息')
 
@@ -19,6 +24,20 @@ const onLoad = () => {
   loading.value = false
   finished.value = true
 }
+
+// 通过 actions 属性来定义菜单选项
+const actions = [
+  { text: 'ChatGPT' },
+  { text: 'Embeddings' },
+  { text: 'Finetunes', disabled: true },
+]
+
+const onSelect = (action) => {
+  model.value = action.text
+  showToast(`已切换为: ${action.text}`)
+}
+
+const onClickRight = () => showPopover.value = true
 
 const generateDesc = async (content: any) => {
   context.value.push({
@@ -41,6 +60,17 @@ const generateDesc = async (content: any) => {
   })
 }
 
+const embeddings = async (content: any) => {
+  finisText.value = '此时一位工作人员正在疯狂码字...'
+  const res = await generateEmbeddings(content)
+  finisText.value = '没有更多消息'
+
+  list.value.push({
+    text: res.data.text,
+    label: 'ai',
+  })
+}
+
 const addMessage = () => {
   if (messae.value === '')
     return
@@ -50,8 +80,11 @@ const addMessage = () => {
     label: 'you',
   })
 
-  // 触发openai回复
-  generateDesc(messae.value)
+  // 触发ChatGPT回复
+  if (model.value === 'ChatGPT')
+    generateDesc(messae.value)
+  else if (model.value === 'Embeddings')
+    embeddings(messae.value)
 
   messae.value = ''
 }
@@ -59,7 +92,15 @@ const addMessage = () => {
 
 <template>
   <div class="container">
-    <van-nav-bar title="罗德与施瓦茨智能客服" fixed />
+    <van-nav-bar title="AI客服" fixed @click-right="onClickRight">
+      <template #right>
+        <van-popover v-model:show="showPopover" :actions="actions" placement="bottom-end" @select="onSelect">
+          <template #reference>
+            <van-icon name="weapp-nav" size="32" />
+          </template>
+        </van-popover>
+      </template>
+    </van-nav-bar>
 
     <van-sticky :offset-top="50">
       <van-notice-bar
