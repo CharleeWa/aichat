@@ -13,3 +13,10 @@ export async function generateEmbeddings(msg): Promise<any> {
   }
   return request.post('/aiapi/trans/v1/embeddings/completions', playload)
 }
+
+export async function generateFineTunes(msg): Promise<any> {
+  const playload = {
+    questions: msg,
+  }
+  return request.post('/aiapi/trans/v1/finetune/completions', playload)
+}

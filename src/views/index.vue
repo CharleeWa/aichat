@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { showToast } from 'vant'
-import { generate, generateEmbeddings } from '../api/index'
+import { generate, generateEmbeddings, generateFineTunes } from '../api/index'
 
 const list = ref([])
 const loading = ref(false)
@@ -29,7 +29,7 @@ const onLoad = () => {
 const actions = [
   { text: 'ChatGPT' },
   { text: 'Embeddings' },
-  { text: 'Finetunes', disabled: true },
+  { text: 'Finetunes' },
 ]
 
 const onSelect = (action) => {
@@ -71,6 +71,17 @@ const embeddings = async (content: any) => {
   })
 }
 
+const finetunes = async (content: any) => {
+  finisText.value = '此时一位工作人员正在疯狂码字...'
+  const res = await generateFineTunes(content)
+  finisText.value = '没有更多消息'
+
+  list.value.push({
+    text: res.data.text,
+    label: 'ai',
+  })
+}
+
 const addMessage = () => {
   if (messae.value === '')
     return
@@ -85,6 +96,8 @@ const addMessage = () => {
     generateDesc(messae.value)
   else if (model.value === 'Embeddings')
     embeddings(messae.value)
+  else if (model.value === 'Finetunes')
+    finetunes(messae.value)
 
   messae.value = ''
 }
